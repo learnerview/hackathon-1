@@ -16,9 +16,7 @@ app = Flask(__name__)
 load_dotenv()
 
 # Configure Google API
-genai.configure(api_key=os.getenv("GOOGLE_API_KEY", "AIzaSyDlq0H5zsbxNpAdDKwqIzPiOZuuEUcix_s"))
-app.secret_key = os.getenv("SECRET_KEY", "AIzaSyDlq0H5zsbxNpAdDKwqIzPiOZuuEUcix_s")
-
+genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 # Database connection function
 def connect_db():
