@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Database Records</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+</head>
+<body>
+  <h1>Database Records</h1>
+
+  <h2>PDF Responses</h2>
+  <table border="1">
+    <tr>
+      <th>ID</th>
+      <th>File Name</th>
+      <th>Response Text</th>
+      <th>Match Percentage</th>
+      <th>Created At</th>
+    </tr>
+    {% for record in response_records %}
+    <tr>
+      <td>{{ record[0] }}</td>
+      <td>{{ record[1] }}</td>
+      <td>{{ record[2] }}</td>
+      <td>{{ record[3] }}</td>
+      <td>{{ record[4] }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  <a href="/home">Back to Home</a>
+</body>
+</html>

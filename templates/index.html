@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Basic meta tags, stylesheets, and links remain unchanged -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <link rel="stylesheet" href="/static/style.css">
+  <title>SkillMatcher</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+  <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" />
+  <link href="{{ url_for('static', filename='css/responsive.css') }}" rel="stylesheet" />
+</head>
+<body class="sub_page">
+    <div class="hero_area">
+        <header class="header_section">
+            <div class="container-fluid">
+                <nav class="navbar navbar-expand-lg custom_nav-container">
+                    <a class="navbar-brand" href="/">
+                        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="" />
+                        <span>SkillMatcher</span>
+                    </a>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav">
+                            <li class="nav-item"><a class="nav-link" href="/home">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/work">Database</a></li>
+                            <li class="nav-item active"><a class="nav-link" href="{{url_for('logout')}}">Logout</a></li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </header>
+    </div>
+    
+    <!-- category section -->
+    <h1>ATS Resume Expert</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <label for="job_description">Job Description:</label><br>
+        <textarea name="job_description" rows="4" cols="50" placeholder="Paste the job description here..." required></textarea><br><br>
+
+        <label for="resume_files">Upload Resume(s) (PDF):</label><br>
+        <input type="file" name="resume_files" accept=".pdf" multiple required><br><br>
+
+        <label for="task">Select Task:</label><br>
+        <select name="task" required>
+            <option value="analyze_resume">Analyze Resume</option>
+            <option value="percentage_match">Percentage Match</option>
+        </select><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    {% if response %}
+    <h2>Response:</h2>
+    <p>{{ response|safe }}</p>
+    {% elif error %}
+    <h2 style="color: red;">Error:</h2>
+    <p>{{ error }}</p>
+    {% elif pdf_data %}
+    <h2>Extracted Text from Uploaded Resumes:</h2>
+    <table border="1">
+        <tr>
+            <th>File Name</th>
+            <th>Extracted Text</th>
+            <th>Response</th>
+            <th>Match Percentage</th>
+        </tr>
+        {% for data in pdf_data %}
+        <tr>
+            <td>{{ data.file_name }}</td>
+            <td>{{ data.extracted_text }}</td>
+            <td>{{ data.gemini_response }}</td>
+            <td>{{ data.match_percentage }}%</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='js/jquery-3.4.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
+</body>
+</html>
